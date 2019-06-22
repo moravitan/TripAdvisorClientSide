@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" type="text/css" href="style.css">-->
+    <!-- load angular -->
+    <script type="text/javascript" src="angularScripts/angular.js"></script>
+    <script type="text/javascript" src="angularScripts/angular-route.js"></script>
+    <script type="text/javascript" src="angularScripts/angular-local-storage.js"></script>
+<!--    <script type="text/javascript" src="jquery.js"></script>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Title</title>
+</head>
+<body ng-app="myApp">
+
+<!-- load app -->
+<script src="app.js"></script>
+
+<!-- load controllers -->
+<script src="Controllers/aboutController.js"></script>
+<script src="Controllers/defaultHomeController.js"></script>
+<script src="Controllers/registerController.js"></script>
+<script src="Controllers/appController.js"></script>
+<script src="Controllers/userHomePageController.js"></script>
+<script src="Controllers/loginController.js"></script>
+
+<!-- load services -->
+
+<script src="Services/userService.js"></script>
+<script src="Services/loginService.js"></script>
+<script src="Services/registerService.js"></script>
+<script src="Services/POIService.js"></script>
+
+<!-- load services -->
+
+<script src="Models/UserModel.js"></script>
+
+
+<!--<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>-->
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+<!-- Ignite UI Required Combined JavaScript Files -->
+<script src="http://cdn-na.infragistics.com/igniteui/2019.1/latest/js/infragistics.core.js"></script>
+<script src="http://cdn-na.infragistics.com/igniteui/2019.1/latest/js/infragistics.lob.js"></script>
+
+<div ng-controller="appController as appCtrl">
+    <nav class="navbar navbar-expand-md navbar-light bg-light" >
+        <!--    <a href="#" class="navbar-brand">Brand</a>-->
+        <img src="logo.png" style="height:80px; width:100px">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="#" class="nav-item nav-link active">Home</a>
+                <a href="#!register" class="nav-item nav-link" ng-hide="appCtrl.isLogin()">Register</a>
+                <a href="#!" class="nav-item nav-link">About</a>
+            </div>
+            <form class="form-inline">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary" ng-click="appCtrl.search()"><i class="fa fa-search" ></i></button>
+                    </div>
+                </div>
+            </form>
+            <div class="navbar-nav">
+                <a href="#!login" class="nav-item nav-link" ng-hide="appCtrl.isLogin()">Login</a>
+            </div>
+            <label ng-model="appCtrl.user_name">Hello {{appCtrl.user_name}}</label>
+            <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.signOut()">Sign Out</label>
+        </div>
+    </nav>
+    <div id="content" ng-view></div>
+</div>
+
+
+
+<!--<div id="menu" ng-controller="appController as appCtrl">
+    <ul>
+        <li><a href="#!">Home</a></li>
+        <li ng-hide="appCtrl.isLogin()"><a href="#!register">Register</a></li>
+        <li><a href="#!about">About</a></li>
+        <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.signOut()">Sign Out</label>
+        <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.userPOI()">My POI</label>
+        <label ng-model="appCtrl.user_name">Hello {{appCtrl.user_name}}</label>
+        <img ng-hide="appCtrl.isLogin()" src="login.png"
+             style="height: 30px; width: 30px; float: right; margin-top: 6px; margin-right: 6px"
+             ng-click="appCtrl.login()">
+    </ul>
+</div>&lt;!&ndash;end menu&ndash;&gt;
+
+&lt;!&ndash;<div id="slider">
+    <ul class="slideshow">
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+        <li><span></span></li>
+    </ul>
+</div>&ndash;&gt;
+
+<div id="content" ng-view></div>
+
+<footer id="footer" ng-controller="appController as appCtrl" ng-init="appCtrl.init()">-->
+<!--    <div ng-repeat="poi in appCtrl.explore" style="display: inline-block; margin-left: 240px; ">-->
+<!--        <img ng-src={{poi.picture}} style="height:200px;width:200px;">-->
+<!--    </div>-->
+<!--</footer>&ndash;&gt;-->
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.login, .retrievePassword {
+    float: right;
+    padding-right: 10%;
+    padding-top: 10%;
+}
+
+.search {
+    float: left;
+    padding-left: 7%;
+    padding-top: 10%;
+}
+
+
+.login h2, .retrievePassword h2 {
+    padding-left: 30%;
+}
+
+.login span, .retrievePassword span {
+}
+
+.form-actions{
+    display: inline-block;
+}
+
+.btn-primary {
+    margin-top: 3%;
+    font-family: 'Open Sans', sans-serif;
+    margin-left: 20%;
+    height: 40%;
+    width: 100%;
+    text-align: center;
+    background-color: cadetblue;
+    color: #000;
+    /*    border-color: white;
+        border-style: solid;
+        border-width: 5px;*/
+    border: 1px solid black;
+    display: inline-block;
+
+}
+
+.btn-primary:disabled,
+.btn-primary[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+
+
+input {
+    height: 100%;
+    width: 70%;
+    text-align: center;
+    display: inline-block;
+}
+
+

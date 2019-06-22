@@ -1,0 +1,150 @@
+<!-- Default form register -->
+
+<div ng-controller="registerController as registerCtrl" ng-init="registerCtrl.init()">
+    <form class="text-center border border-light p-5" name="registerForm">
+
+        <p class="h4 mb-4">Register</p>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <!-- User name -->
+                <input type="text" id="defaultRegisterFormUserName" class="form-control" placeholder="User name"
+                       name="UserName"
+                       ng-model="registerCtrl.user.user_name"
+                       ng-minlength="3"
+                       ng-maxlength="8"
+                       ng-pattern=registerCtrl.regRegex
+                       required>
+                <small class="form-text text-muted mb-4">Between 3 to 8 letters</small>
+            </div>
+            <!-- Password -->
+            <div class="col">
+                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password"
+                       aria-describedby="defaultRegisterFormPasswordHelpBlock"
+                       name="Password"
+                       ng-model="registerCtrl.user.password"
+                       ng-minlength="5"
+                       ng-maxlength="10"
+                       ng-pattern=registerCtrl.passRegex
+                       required>
+                <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                    Between 3 to 8 letters and 1 digit
+                </small>
+            </div>
+        </div>
+        <div class="form-row mb-4">
+            <div class="col">
+                <!-- First name -->
+                <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name"
+                       name="FirstName"
+                       ng-model="registerCtrl.user.first_name"
+                       ng-pattern=registerCtrl.regRegex
+                       required>
+                <small class="form-text text-muted mb-4">Only letters</small>
+            </div>
+            <div class="col">
+                <!-- Last name -->
+                <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name"
+                       name="LastName"
+                       ng-model="registerCtrl.user.last_name"
+                       ng-pattern=registerCtrl.regRegex
+                       required>
+                <small class="form-text text-muted mb-4">Only letters</small>
+            </div>
+
+        </div>
+        <div class="form-row mb-4">
+            <div class="col">
+                <input type="text" id="defaultRegisterFormCity" class="form-control" placeholder="City"
+                       name="City"
+                       ng-model="registerCtrl.user.city"
+                       ng-pattern=registerCtrl.regRegex
+                       required>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect1" name="Country"
+                            ng-options="country.Name for country in registerCtrl.countries"
+                            ng-model="registerCtrl.user.country"
+                            required
+                            value='Israel'>
+                        <option ng-repeat="country in registerCtrl.countries" value="{{country.Name}}">{{country.Name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- E-mail -->
+        <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail"
+               name="Email"
+               ng-model="registerCtrl.user.email"
+               ng-pattern="registerCtrl.emailRegex"
+               required>
+            <small class="form-text text-muted mb-4">Email format</small>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    <select class="form-control" name="FirstQuestion"
+                            ng-options="ques.question for ques in registerCtrl.questions"
+                            ng-model="registerCtrl.user.questions[0]"
+                            required
+                            ng-change="registerCtrl.setSecondQuestion()">
+                        <option ng-repeat="ques in registerCtrl.questions" value="{{ques.question}}" >{{ques.question}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Answer"
+                       name="FirstAnswer"
+                       ng-model="registerCtrl.user.answers[0]"
+                       required>
+            </div>
+        </div>
+        <div class="form-row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    <select class="form-control" name="SecondQuestion"
+                            ng-options="ques.question for ques in registerCtrl.secondQuestions"
+                            ng-model="registerCtrl.user.questions[1]"
+                            required
+                            ng-disabled="registerForm.FirstQuestion.$error.required">
+                        <option ng-repeat="ques in registerCtrl.secondQuestions" value="{{ques.question}}">{{ques.question}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Answer"
+                       name="FirstAnswer"
+                       ng-model="registerCtrl.user.answers[1]"
+                       ng-disabled="registerForm.FirstQuestion.$error.required"
+                       required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2">Categories:</div>
+            <div class="col-sm-10">
+                <div class="form-check" ng-repeat="category in registerCtrl.categories" style="float: left; display: block; margin-left: 14px">
+                    <input class="form-check-input" type="checkbox" id="{{category.Name}}"
+                           name="categories"
+                           ng-click="registerCtrl.selected(category.Name)"
+                           ng-model="registerCtrl.user_categories[$index].checked"
+                           value="{{category.Name}}"
+                            ng-change="registerCtrl.selectCategory(registerCtrl.user_categories[$index])">
+                    <label class="form-check-label" for="{{category.Name}}">
+                        {{category.Name}}
+                    </label>
+                </div>
+                <small class="form-text text-muted mb-4">At least 2</small>
+            </div>
+        </div>
+        <!-- Sign up button -->
+        <button class="btn btn-info my-4 btn-block" type="submit" ng-disabled="registerForm.$invalid || registerCtrl.c.length < 2"
+                ng-click="registerCtrl.register()">Register</button>
+
+
+    </form>
+    <!-- Default form register -->
+</div>
