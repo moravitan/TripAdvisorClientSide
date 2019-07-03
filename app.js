@@ -18,7 +18,7 @@ app.config(function ($routeProvider) {
         })
         // register
         .when('/register', {
-            templateUrl: 'pages/reg.html',
+            templateUrl: 'pages/register.html',
             controller: 'registerController as registerController'
         })
         .when('/home', {
@@ -31,10 +31,14 @@ app.config(function ($routeProvider) {
         })
         .when('/login', {
             // this is a template
-            templateUrl: 'pages/test.html',
+            templateUrl: 'pages/login.html',
+            controller: 'loginController as loginCtrl'
+        })
+        .when('/retrievePassword', {
+            // this is a template
+            templateUrl: 'pages/retrievePassword.html',
             controller: 'loginController as loginCtrl'
         })
         // other
         .otherwise({redirectTo: '/'});
-
 });

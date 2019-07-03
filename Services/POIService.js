@@ -63,5 +63,20 @@ angular.module('myApp').service('POIService', function ($http, $window) {
         return $http(req);
     };
 
+    self.getPOInformation = function(poiName){
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:3000/getInterestInfo/' + poiName,
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Max-Age': '*',
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS'
+            }
+        }
+        return $http(req);
+    };
+
 
 });

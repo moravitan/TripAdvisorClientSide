@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" type="text/css" href="style.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="style.css">-->
     <!-- load angular -->
     <script type="text/javascript" src="angularScripts/angular.js"></script>
     <script type="text/javascript" src="angularScripts/angular-route.js"></script>
     <script type="text/javascript" src="angularScripts/angular-local-storage.js"></script>
-<!--    <script type="text/javascript" src="jquery.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <!--    <script type="text/javascript" src="jquery.js"></script>-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -50,9 +51,9 @@
 <script src="http://cdn-na.infragistics.com/igniteui/2019.1/latest/js/infragistics.lob.js"></script>
 
 <div ng-controller="appController as appCtrl">
-    <nav class="navbar navbar-expand-md navbar-light bg-light" >
+    <nav class="navbar navbar-expand-md navbar-light bg-light" style="height: 2%;">
         <!--    <a href="#" class="navbar-brand">Brand</a>-->
-        <img src="logo.png" style="height:80px; width:100px">
+        <img src="logo.png" style="height:60px; width:100px" ng-click="appCtrl.homepage()">
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -62,12 +63,14 @@
                 <a href="#" class="nav-item nav-link active">Home</a>
                 <a href="#!register" class="nav-item nav-link" ng-hide="appCtrl.isLogin()">Register</a>
                 <a href="#!" class="nav-item nav-link">About</a>
+                <a ng-show="appCtrl.isLogin()" href="#!userPOI" class="nav-item nav-link">My POI</a>
             </div>
             <form class="form-inline">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search">
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary" ng-click="appCtrl.search()"><i class="fa fa-search" ></i></button>
+                        <button type="button" class="btn btn-secondary" ng-click="appCtrl.search()"><i
+                                class="fa fa-search"></i></button>
                     </div>
                 </div>
             </form>
@@ -78,44 +81,76 @@
             <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.signOut()">Sign Out</label>
         </div>
     </nav>
-    <div id="content" ng-view></div>
+    <div class="container-fluid text-center" ng-view>
+    </div>
 </div>
 
+<!--<div ng-controller="appController as appCtrl" ng-init="appCtrl.init()">
+    <div class="row text-center text-lg-left">
+        <nav class="navbar navbar-expand-md navbar-dark bg-info">
+            <div class="col-lg-3 col-md-4 col-6" ng-repeat="poi in appCtrl.explore" >
+                <img class="img-fluid img-thumbnail" src={{poi.picture}} >
+                <br>
+                <h5 class="card-title">{{poi.name}}</h5>
+            </div>
+        </nav>
+    </div>
+</div>-->
 
+<div ng-controller="appController as appCtrl" ng-init="appCtrl.init()">
+    <footer class="page-footer font-small bg-dark lighten-3 pt-4">
 
-<!--<div id="menu" ng-controller="appController as appCtrl">
-    <ul>
-        <li><a href="#!">Home</a></li>
-        <li ng-hide="appCtrl.isLogin()"><a href="#!register">Register</a></li>
-        <li><a href="#!about">About</a></li>
-        <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.signOut()">Sign Out</label>
-        <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.userPOI()">My POI</label>
-        <label ng-model="appCtrl.user_name">Hello {{appCtrl.user_name}}</label>
-        <img ng-hide="appCtrl.isLogin()" src="login.png"
-             style="height: 30px; width: 30px; float: right; margin-top: 6px; margin-right: 6px"
-             ng-click="appCtrl.login()">
-    </ul>
-</div>&lt;!&ndash;end menu&ndash;&gt;
+        <div class="container">
 
-&lt;!&ndash;<div id="slider">
-    <ul class="slideshow">
-        <li><span></span></li>
-        <li><span></span></li>
-        <li><span></span></li>
-        <li><span></span></li>
-    </ul>
-</div>&ndash;&gt;
+            <div class="row" style="margin-left: 30%">
 
-<div id="content" ng-view></div>
+                <div class="col-lg-2 col-md-12 mb-4">
 
-<footer id="footer" ng-controller="appController as appCtrl" ng-init="appCtrl.init()">-->
-<!--    <div ng-repeat="poi in appCtrl.explore" style="display: inline-block; margin-left: 240px; ">-->
-<!--        <img ng-src={{poi.picture}} style="height:200px;width:200px;">-->
-<!--    </div>-->
-<!--</footer>&ndash;&gt;-->
+                    <div class="view overlay z-depth-1-half">
+                        <img src={{appCtrl.explore[0].picture}} class="img-fluid"
+                             alt="" style="width: 100px; height: 100px;">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
 
+                </div>
+                <div class="col-lg-2 col-md-12 mb-4">
 
+                    <div class="view overlay z-depth-1-half">
+                        <img src={{appCtrl.explore[1].picture}} class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
 
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-4">
+
+                    <div class="view overlay z-depth-1-half">
+                        <img src={{appCtrl.explore[2].picture}} class="img-fluid"
+                             alt="">
+                        <a href="">
+                            <div class="mask rgba-white-light"></div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Footer Elements -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+</div>
 
 </body>
 </html>

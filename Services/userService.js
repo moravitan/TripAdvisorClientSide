@@ -2,6 +2,7 @@ angular.module('myApp').service('userService', ['$window', '$http' ,function ($w
     let self = this;
     self.isLogin = false;
     self.user_name = "Guest";
+    self.userPOI = [];
 
     self.setLogin = function (login) {
         self.isLogin = login;
@@ -63,5 +64,11 @@ angular.module('myApp').service('userService', ['$window', '$http' ,function ($w
         return $http(req);
     };
 
+    self.addUserPOI = function (poi) {
+        self.userPOI.push(poi);
+    };
 
+    self.removeUserPOI = function (index) {
+        self.userPOI.splice(index,1);
+    };
 }]);

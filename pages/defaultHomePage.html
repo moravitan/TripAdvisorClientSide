@@ -1,32 +1,218 @@
+<head>
+    <style>
 
+        .carousel-inner img {
+            width: 100%; /* Set width to 100% */
+            margin: auto;
+            height: 400px;
+        }
+
+        /* Hide the carousel text when the screen is less than 600 pixels wide */
+        @media (max-width: 600px) {
+            .carousel-caption {
+                display: none;
+            }
+        }
+    </style>
+</head>
 <div ng-controller="defaultHomePageController as dHomeCtrl" ng-init="dHomeCtrl.init()">
-    <!-- Default unchecked -->
-    <div class="custom-control custom-checkbox" style="display: inline-block">
-        <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-        <label ng-click="dHomeCtrl.orderByRank()" class="custom-control-label" for="defaultUnchecked">Order by rank</label>
-    </div>
-    <div>
-        <div ng-hide="dHomeCtrl.isOrderByRank" class="card" style="display: inline-block; margin-right: 4px" ng-repeat="poi in dHomeCtrl.allPOI">
-        <img src={{poi.picture}} style="height: 200px;width: 280px" class="card-img-top"  alt="Card image cap">
-        <div class="card-body">
-            <br>
-            <h5 class="card-title">{{poi.name}}</h5>
-            <p class="card-text">Category: {{poi.category}}</p>
-            <p class="card-text">rank: {{poi.rank}}</p>
-            <a href="#" class="btn btn-primary">More information..</a>
-            <a href="#" class="btn btn-primary">Add Review</a>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="pic2.jpeg" alt="Image">
+            </div>
+
         </div>
     </div>
-    <div ng-show="dHomeCtrl.isOrderByRank" class="card" style="display: inline-block; margin-right: 4px" ng-repeat="poi in dHomeCtrl.allPOI | orderBy: 'rank': true">
-        <img src={{poi.picture}} style="height: 200px;width: 280px" class="card-img-top"  alt="Card image cap">
-        <div class="card-body">
+
+    <div class="row content">
+        <div class="col-sm-2 sidenav">
             <br>
-            <h5 class="card-title">{{poi.name}}</h5>
-            <p class="card-text">Category: {{poi.category}}</p>
-            <p class="card-text">rank: {{poi.rank}}</p>
-            <a href="#" class="btn btn-primary">More information..</a>
+            <div class="custom-control custom-checkbox" style="display: inline-block">
+                <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                <label ng-click="dHomeCtrl.orderByRank()" class="custom-control-label" for="defaultUnchecked">Order by
+                    rank</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="defaultUnchecked1">
+                <label class="custom-control-label" for="defaultUnchecked1">Food and
+                    Drinks</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="defaultUnchecked2">
+                <label class="custom-control-label"
+                       for="defaultUnchecked2">Museums</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="defaultUnchecked3">
+                <label class="custom-control-label" for="defaultUnchecked3">Night
+                    life</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="defaultUnchecked4">
+                <label class="custom-control-label" for="defaultUnchecked4">Sailing
+                    and water sports</label>
+            </div>
         </div>
-    </div>
+        <div class="col-sm-10">
+            <div class="row">
+                <div class="col-sm-10">
+                    dfsdf
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10 text-left">
+                    <div ng-hide="dHomeCtrl.isOrderByRank"
+                         style="display: inline-block; margin-right: 2px"
+                         ng-repeat="poi in dHomeCtrl.allPOI | orderBy: 'category'">
+                        <img src={{poi.picture}} style="height: 150px;width: 280px"  class="img-rounded"
+                             alt="Card image cap">
+                        <div>
+                            <button type="button" class="btn primary-link" data-toggle="modal"
+                                    data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation($index)"><u>{{poi.name}}</u></button>
+                            <p style="margin-left: 9px;">Category: {{poi.category}}</p>
+                            <p style="margin-left: 9px;">rank: {{poi.rank}}</p>
+                            <img ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[$index]}} ng-click="dHomeCtrl.changeURL($index)" id="{{poi.name}}">
+                            <button type="button" class="btn btn-link float-right" id={{$index}} data-toggle="modal"
+                                    data-target="#reviewModal" ng-click="dHomeCtrl.getPOInformation($index)">
+                                Add Review
+                            </button>
+                            <!-- Modal -->
+                            <div ng-show="dHomeCtrl.show" class="modal fade" id="informationModal" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{dHomeCtrl.description}}
+                                            <br>
+                                            {{dHomeCtrl.rank}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="dHomeCtrl.show" class="modal fade" id="reviewModal" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reviewModal1">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{dHomeCtrl.description}}
+                                            <br>
+                                            {{dHomeCtrl.rank}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="dHomeCtrl.isOrderByRank"
+                         style="display: inline-block; margin-right: 2px"
+                         ng-repeat="poi in dHomeCtrl.allPOI | orderBy: 'rank': true">
+                        <img src={{poi.picture}} style="height: 150px;width: 280px"  class="img-rounded"
+                             alt="Card image cap">
+                        <div>
+                            <button type="button" class="btn primary-link" data-toggle="modal"
+                                    data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation($index)"><u>{{poi.name}}</u></button>
+                            <p style="margin-left: 9px;">Category: {{poi.category}}</p>
+                            <p style="margin-left: 9px;">rank: {{poi.rank}}</p>
+                            <img ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[$index]}} ng-click="dHomeCtrl.changeURL($index)" id="{{poi.name}}">
+                            <button type="button" class="btn btn-link float-right" id={{$index}} data-toggle="modal"
+                                    data-target="#reviewModal" ng-click="dHomeCtrl.getPOInformation($index)">
+                                Add Review
+                            </button>
+                            <!-- Modal -->
+                            <div ng-show="dHomeCtrl.show" class="modal fade" id="informationModal" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{dHomeCtrl.description}}
+                                            <br>
+                                            {{dHomeCtrl.rank}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="dHomeCtrl.show" class="modal fade" id="reviewModal" tabindex="-1"
+                                 role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reviewModal1">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{dHomeCtrl.description}}
+                                            <br>
+                                            {{dHomeCtrl.rank}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

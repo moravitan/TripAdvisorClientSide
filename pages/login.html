@@ -1,92 +1,22 @@
 <link rel="stylesheet" type="text/css" href="Style\loginStyle.css">
 
-
-<div ng-controller="loginController as loginCtrl">
-    <nav class="login" ng-show="loginCtrl.isLogin">
-        <h2>Log In</h2>
-        <form name="loginForm" role="form" novalidate>
-            <input type="text"
-                   name="UserName"
-                   ng-model="loginCtrl.user_name"
-                   class="form-control"
-                   placeholder="Enter your User name"
-                   required>
-            <br>
-            <br>
-            <input type="password"
-                   ng-required="true"
-                   name="Password"
-                   ng-model="loginCtrl.password"
-                   class="form-control"
-                   required
-                   placeholder="enter your Password">
-
-            <div class="form-actions">
-                <button type="submit" class="btn-primary" ng-disabled="loginForm.$invalid" ng-click="loginCtrl.login()">
-                    Log in
-                </button>
-                <label class="btn-primary" ng-click="loginCtrl.retrievePassword()">Forgot my password</label>
-            </div>
-            <span>{{loginCtrl.message}}</span>
-        </form>
-    </nav>
-
-    <nav class="retrievePassword" ng-show="!loginCtrl.isLogin">
-        <h2>password</h2>
-        <form name="passwordForm" role="form" novalidate>
-            <input type="text"
-                   name="UserName"
-                   ng-model="loginCtrl.user_name"
-                   class="form-control"
-                   placeholder="Enter your User name"
-                   required>
-            <br>
-            <button type="submit" class="btn-primary" ng-disabled="passwordForm.$invalid"
-                    ng-click="loginCtrl.getQuestion()">Get questions
+<div class="login-form" ng-controller="loginController as loginCtrl">
+    <form name="loginForm" role="form" novalidate>
+        <h2 class="text-center">Login</h2>
+        <div class="form-group has-error">
+            <input type="text" class="form-control" ng-model="loginCtrl.user_name" name="UserName"
+                   placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" ng-model="loginCtrl.password" name="Password"
+                   placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid"
+                    ng-click="loginCtrl.login()">Sign in
             </button>
-            <br>
-        </form>
-        <form name="questionForm" role="form" novalidate>
-            Choose Question :
-            <select type="text"
-                    class="form-control"
-                    name="question"
-                    ng-model="loginCtrl.question"
-                    ng-options="ques.question for ques in loginCtrl.userQuestions"
-                    required
-                    style="width: 150px">
-                <option ng-repeat="ques in loginCtrl.userQuestions" value="{{ques.question}}">{{ques.question}}</option>
-            </select>
-            <br>
-            <br>
-            Your Answer :
-            <input type="text"
-                   ng-required="true"
-                   name="answer"
-                   ng-model="loginCtrl.answer"
-                   required
-                   class="form-control"
-                   placeholder="Your answer"
-                   style="width: 150px; margin-left: 29px">
-            <span ng-show="questionForm.answer.$dirty && questionForm.answer.$error.required"
-                  class="help-block">Field required</span>
-            <br>
-
-            <span ng-model="loginCtrl.message">{{loginCtrl.message}}</span>
-            <br>
-            <br>
-            <div class="form-actions">
-                <button type="submit" class="btn-primary" ng-disabled="questionForm.$invalid"
-                        ng-click="loginCtrl.getPassword()">
-                    Get Password
-                </button>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn-primary" ng-click="loginCtrl.setLoginNav()">
-                    Log in
-                </button>
-            </div>
-        </form>
-    </nav>
+        </div>
+        <p><a href="#!retrievePassword">Lost your Password?</a></p>
+        <span>{{loginCtrl.message}}</span>
+    </form>
 </div>

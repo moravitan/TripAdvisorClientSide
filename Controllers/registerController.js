@@ -9,9 +9,7 @@ angular.module("myApp").controller('registerController', ['registerService', 'us
         self.questions = [];
         self.secondQuestions = [];
         self.categories = [];
-        self.regRegex = /^[A-Za-z]+$/;
-        self.passRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
-        self.emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
 
         self.init = function () {
             var XMLhttp = new XMLHttpRequest();

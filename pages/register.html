@@ -1,190 +1,148 @@
-<head>
-    <link rel="stylesheet" type="text/css" href="Style\registerStyle.css">
-</head>
+<!-- Default form register -->
 
-<h2>Registration Form</h2>
 <div ng-controller="registerController as registerCtrl" ng-init="registerCtrl.init()">
-    <form name="registerForm" role="form" novalidate>
-            <div class="left">
-                <span>User Name: <br></span>
-                <input type="text"
+    <form class="text-center border border-light p-5" name="registerForm">
+
+        <p class="h4 mb-4">Register</p>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <!-- User name -->
+                <input type="text" id="defaultRegisterFormUserName" class="form-control" placeholder="User name"
                        name="UserName"
                        ng-model="registerCtrl.user.user_name"
-                       class="form-control"
-                       placeholder="Your User name"
                        ng-minlength="3"
                        ng-maxlength="8"
-                       ng-pattern="/^[A-za-z]+$/"
                        required>
-                <span ng-show="registerForm.UserName.$dirty && registerForm.UserName.$error.required"
-                      class="help-block">Field required</span>
-                <span ng-show="registerForm.UserName.$dirty && (registerForm.UserName.$error.minlength || registerForm.UserName.$error.maxlength)"
-                      class="help-block">User name must contain between 3 to 8 characters</span>
-                <span ng-show="registerForm.UserName.$dirty && registerForm.UserName.$error.pattern" class="help-block">Must contain letters</span>
-                <br>
-                <br>
-                <span>Password: <br></span>
-                <input type="password"
-                       ng-required="true"
+<!--                ng-pattern="/^[A-Za-z]+$/"-->
+                <small class="form-text text-muted mb-4">Between 3 to 8 letters</small>
+            </div>
+            <!-- Password -->
+            <div class="col">
+                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password"
+                       aria-describedby="defaultRegisterFormPasswordHelpBlock"
                        name="Password"
                        ng-model="registerCtrl.user.password"
                        ng-minlength="5"
                        ng-maxlength="10"
-                       class="form-control"
-                       ng-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"
-                       required
-                       placeholder="Your Password">
-                <span ng-show="registerForm.Password.$dirty && registerForm.Password.$error.required"
-                      class="help-block">Field required</span>
-                <span ng-show="registerForm.Password.$dirty && (registerForm.Password.$error.minlength || registerForm.Password.$error.maxlength)"
-                      class="help-block">Password must contain between 5 to 10 characters</span>
-                <span ng-show="registerForm.Password.$dirty && registerForm.Password.$error.pattern" class="help-block">Must contain numbers and letters</span>
-                <br>
-                <br>
-                <span>First Name:<br></span>
-                <input type="text"
-                       ng-required="true"
-                       name="FirstName"
-                       ng-model="registerCtrl.user.first_name"
-                       ng-pattern="/^[a-zA-Z]*$/"
-                       required
-                       class="form-control"
-                       placeholder="Your First Name"
-                       ng-change="registerCtrl.message=''">
-                <span ng-show="registerForm.FirstName.$dirty && registerForm.FirstName.$error.required"
-                      class="help-block">Field required</span>
-                <span ng-show="registerForm.FirstName.$dirty && registerForm.FirstName.$error.pattern"
-                      class="help-block">Must contain only letters</span>
-                <br>
-                <br>
-                <span>Last Name:<br></span>
-                <input type="text"
-                       ng-required="true"
-                       name="LastName"
-                       ng-model="registerCtrl.user.last_name"
-                       ng-pattern="/^[a-zA-Z]*$/"
-                       required
-                       class="form-control"
-                       placeholder="Your Last Name">
-                <span ng-show="registerForm.LastName.$dirty && registerForm.LastName.$error.required"
-                      class="help-block">Field required</span>
-                <span ng-show="registerForm.LastName.$dirty && registerForm.LastName.$error.pattern" class="help-block">Must contain only letters</span>
-                <span>Country:<br></span>
-                <select
-                        type="text"
-                        class="form-control"
-                        name="Country"
-                        ng-options="country.Name for country in registerCtrl.countries"
-                        ng-model="registerCtrl.user.country"
-                        required>
-                    <option ng-repeat="country in registerCtrl.countries" value="{{country.Name}}">{{country.Name}}
-                    </option>
-                </select>
-                <span ng-show="registerForm.Country.$dirty && registerForm.Country.$error.required" class="help-block">Field required</span>
+                       required>
+<!--                ng-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"-->
+                <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                    Between 3 to 8 letters and 1 digit
+                </small>
             </div>
-            <div class="right">
-                <span>City:<br></span>
-                <input type="text"
-                       ng-required="true"
+        </div>
+        <div class="form-row mb-4">
+            <div class="col">
+                <!-- First name -->
+                <input type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name"
+                       name="FirstName"
+                       ng-model="registerCtrl.user.first_name" required>
+<!--                ng-pattern="/^[A-Za-z]+$/"-->
+                <small class="form-text text-muted mb-4">Only letters</small>
+            </div>
+            <div class="col">
+                <!-- Last name -->
+                <input type="text" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name"
+                       name="LastName"
+                       ng-model="registerCtrl.user.last_name" required>
+<!--                ng-pattern="/^[A-Za-z]+$/"-->
+                <small class="form-text text-muted mb-4">Only letters</small>
+            </div>
+
+        </div>
+        <div class="form-row mb-4">
+            <div class="col">
+                <input type="text" id="defaultRegisterFormCity" class="form-control" placeholder="City"
                        name="City"
                        ng-model="registerCtrl.user.city"
-                       ng-pattern="/^[a-zA-Z ]*$/"
-                       required
-                       class="form-control"
-                       placeholder="Your City">
-                <span ng-show="registerForm.City.$dirty && registerForm.City.$error.required"
-                      class="help-block">Field required</span>
-                <span ng-show="registerForm.City.$dirty && registerForm.City.$error.pattern" class="help-block">Must contain only letters</span>
-                <br>
-                <br>
-                <span>Email:<br></span>
-                <input type="text"
-                       ng-required="true"
-                       name="Email"
-                       ng-model="registerCtrl.user.email"
-                       ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
-                       required
-                       class="form-control"
-                       placeholder="Your Email">
-                <span ng-show="registerForm.Email.$dirty && registerForm.Email.$error.required" class="help-block">Field required</span>
-                <span ng-show="registerForm.Email.$dirty && registerForm.Email.$error.pattern" class="help-block">Must contain only letters</span>
-                <br>
-                <br>
-                <span>First Question:<br></span>
-                <select type="text"
-                        class="form-control"
-                        name="FirstQuestion"
-                        ng-model="registerCtrl.user.questions[0]"
-                        ng-options="ques.question for ques in registerCtrl.questions"
-                        required
-                        ng-change="registerCtrl.setSecondQuestion()">
-                    <option ng-repeat="ques in registerCtrl.questions" value="{{ques.question}}" >{{ques.question}}
-                    </option>
-                </select>
-                <span ng-show="registerForm.FirstQuestion.$dirty && registerForm.FirstQuestion.$error.required"
-                      class="help-block">Field required</span>
-                <br>
-                <br>
-                <span>First Answer:<br></span>
-                <input type="text"
-                       ng-required="true"
+                       required>
+<!--                ng-pattern="/^[A-Za-z]+$/"-->
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect1" name="Country"
+                            ng-options="country.Name for country in registerCtrl.countries"
+                            ng-model="registerCtrl.user.country"
+                            required
+                            value='Israel'>
+                        <option ng-repeat="country in registerCtrl.countries" value="{{country.Name}}">{{country.Name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- E-mail -->
+        <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail"
+               name="Email"
+               ng-model="registerCtrl.user.email"
+               ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
+               required>
+            <small class="form-text text-muted mb-4">Email format</small>
+
+        <div class="form-row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    <select class="form-control" name="FirstQuestion"
+                            ng-options="ques.question for ques in registerCtrl.questions"
+                            ng-model="registerCtrl.user.questions[0]"
+                            required
+                            ng-change="registerCtrl.setSecondQuestion()">
+                        <option ng-repeat="ques in registerCtrl.questions" value="{{ques.question}}" >{{ques.question}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Answer"
                        name="FirstAnswer"
                        ng-model="registerCtrl.user.answers[0]"
-                       required
-                       class="form-control"
-                       placeholder="Your answer">
-                <span ng-show="registerForm.FirstAnswer.$dirty && registerForm.FirstAnswer.$error.required"
-                      class="help-block">Field required</span>
-                <br>
-                <br>
-                <span>Second Question:<br></span>
-                <select type="text"
-                        class="form-control"
-                        name="SecondQuestion"
-                        ng-model="registerCtrl.user.questions[1]"
-                        ng-options="ques.question for ques in registerCtrl.secondQuestions"
-                        required
-                        ng-disabled="registerForm.FirstQuestion.$error.required">
-                    <option ng-repeat="ques in registerCtrl.secondQuestions" value="{{ques.question}}">{{ques.question}}
-                    </option>
-                </select>
-                <span ng-show="registerForm.SecondQuestion.$dirty && registerForm.SecondQuestion.$error.required"
-                      class="help-block">Field required</span>
-                <br>
-                <br>
-                <span>Second Answer:<br></span>
-                <input type="text"
-                       ng-required="true"
-                       name="SecondAnswer"
+                       required>
+            </div>
+        </div>
+        <div class="form-row mb-4">
+            <div class="col">
+                <div class="form-group">
+                    <select class="form-control" name="SecondQuestion"
+                            ng-options="ques.question for ques in registerCtrl.secondQuestions"
+                            ng-model="registerCtrl.user.questions[1]"
+                            required
+                            ng-disabled="registerForm.FirstQuestion.$error.required">
+                        <option ng-repeat="ques in registerCtrl.secondQuestions" value="{{ques.question}}">{{ques.question}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Answer"
+                       name="FirstAnswer"
                        ng-model="registerCtrl.user.answers[1]"
-                       required
-                       class="form-control"
-                       placeholder="Your answer">
-                <span ng-show="registerForm.SecondAnswer.$dirty && registerForm.SecondAnswer.$error.required"
-                      class="help-block">Field required</span>
-                <br>
-            </div>
-        <div class="bottom">
-            <span>Categories:</span>
-            <br>
-            <div  ng-repeat="category in registerCtrl.categories">
-                <input type="checkbox"
-                       name="categories"
-                       ng-click="registerCtrl.selected(category.Name)"
-                       ng-model="registerCtrl.user_categories[$index].checked"
-                       ng-click="registerCtrl.assert()"
-                       value="{{category.Name}}">{{category.Name}}
+                       ng-disabled="registerForm.FirstQuestion.$error.required"
+                       required>
             </div>
         </div>
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary" ng-disabled="registerForm.$invalid"
-                    ng-click="registerCtrl.register()">Register
-                <br>
-            </button>
+        <div class="form-group row">
+            <div class="col-sm-2">Categories:</div>
+            <div class="col-sm-10">
+                <div class="form-check" ng-repeat="category in registerCtrl.categories" style="float: left; display: block; margin-left: 14px">
+                    <input class="form-check-input" type="checkbox" id="{{category.Name}}"
+                           name="categories"
+                           ng-click="registerCtrl.selected(category.Name)"
+                           ng-model="registerCtrl.user_categories[$index].checked"
+                           value="{{category.Name}}"
+                            ng-change="registerCtrl.selectCategory(registerCtrl.user_categories[$index])">
+                    <label class="form-check-label" for="{{category.Name}}">
+                        {{category.Name}}
+                    </label>
+                </div>
+                <small class="form-text text-muted mb-4">At least 2</small>
+            </div>
         </div>
+        <!-- Sign up button -->
+        <button class="btn btn-info my-4 btn-block" type="submit" ng-disabled="registerForm.$invalid || registerCtrl.c.length < 2"
+                ng-click="registerCtrl.register()">Register</button>
+
 
     </form>
-    <span>{{registerCtrl.user.questions[0].question}}</span>
-
+    <!-- Default form register -->
 </div>
-
