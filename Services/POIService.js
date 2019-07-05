@@ -32,26 +32,26 @@ angular.module('myApp').service('POIService', function ($http, $window) {
         return $http(req);
     }
 
-    self.getRecommendedPOI = function(){
-        var req = {
+
+    self.getRandomThreeMostPopularPointOfInterest = function(){
+/*        var req = {
             method: 'GET',
-            url: 'http://localhost:3000/getRecommendedInterest',
+            url: 'http://localhost:3000/getRandomThreeMostPopularPointOfInterest',
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Headers': '*',
                 'Access-Control-Max-Age': '*',
-                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS',
-                'x-auth-token' : $window.sessionStorage.getItem("token")
+                'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS'
             }
-        };
-        return $http(req);
+        }
+        return $http(req);*/
     };
 
-    self.getRandomThreeMostPopularPointOfInterest = function(){
+    self.getPOInformation = function(poiName){
         var req = {
             method: 'GET',
-            url: 'http://localhost:3000/getRandomThreeMostPopularPointOfInterest',
+            url: 'http://localhost:3000/getInterestInfo/' + poiName,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
@@ -63,10 +63,11 @@ angular.module('myApp').service('POIService', function ($http, $window) {
         return $http(req);
     };
 
-    self.getPOInformation = function(poiName){
+    self.addReview = function(review){
         var req = {
-            method: 'GET',
-            url: 'http://localhost:3000/getInterestInfo/' + poiName,
+            method: 'POST',
+            url: 'http://localhost:3000/addReview',
+            data : review,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',

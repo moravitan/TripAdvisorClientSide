@@ -1,0 +1,153 @@
+<div ng-controller="myPOIController as POICtrl" ng-init="POICtrl.init()">
+    <div ng-show="POICtrl.isExist"
+         class=" col col-sm-9 border border-success rounded alert alert-success mt-3 mr-3 ml-3">
+        <p class="h4 mb-4">Your Point Of Interest</p>
+
+        <div ng-show="POICtrl.isExist"
+             style="display: inline-block; margin-right: 2px"
+             ng-repeat="poi in POICtrl.localPOI">
+            <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
+                 alt="Card image cap" ng-click="POICtrl.getPOInformation(poi)" data-target="#informationModal"
+                 data-toggle="modal">
+            <div>
+                <button type="button" class="btn primary-link" data-toggle="modal"
+                        data-target="#informationModal" ng-click="POICtrl.getPOInformation(poi)">
+                    <u>{{poi.name}}</u>
+                </button>
+                <p>Category: {{poi.category}}</p>
+                <p>rank: {{poi.rank}}</p>
+                <button type="button" class="btn btn-link float-right"
+                        ng-click="POICtrl.remove($index)">
+                    Remove
+                </button>
+            </div>
+        </div>
+
+        <div ng-show="POICtrl.isExist"
+             style="display: inline-block; margin-right: 2px"
+             ng-repeat="poi in POICtrl.serverPOI">
+            <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
+                 alt="Card image cap" ng-click="POICtrl.getPOInformation(poi)" data-target="#informationModal"
+                 data-toggle="modal">
+            <div>
+                <button type="button" class="btn primary-link" data-toggle="modal"
+                        data-target="#informationModal" ng-click="POICtrl.getPOInformation(poi)">
+                    <u>{{poi.name}}</u>
+                </button>
+                <p>Category: {{poi.category}}</p>
+                <p>rank: {{poi.rank}}</p>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div ng-show="POICtrl.showInformation" class="modal fade" id="informationModal" tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col col-7">
+                                <p class="h4">Description</p>
+                                {{POICtrl.description}}
+                            </div>
+                            <div class="col col-5">
+                                <p class="h4">Rank</p>
+                                {{POICtrl.rank}} %
+                                <p class="h5">Number Of Watchers</p>
+                                {{POICtrl.numberOfWatchers}}
+                            </div>
+                        </div>
+                        <div ng-show="POICtrl.isExistReviews" class="row">
+                            <p class="h4 align-content-center col col-12">Reviews</p>
+                            <div class="col col-6">
+                                <p class="h4">First Review</p>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p class="h5">Review:</p>
+                                    </div>
+                                    <div class="col col-6">
+                                        {{POICtrl.firstReview}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p class="h5">Rank:</p>
+                                    </div>
+                                    <div class="col col-6">
+                                        {{POICtrl.firstReviewRank}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p class="h5">Date:</p>
+                                    </div>
+                                    <div class="col col-6 ">
+                                        {{POICtrl.firstReviewDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="POICtrl.isExistSecondReviews" class="col col-6">
+                                <p class="h4">Second Review</p>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p class="h5">Review:</p>
+                                    </div>
+                                    <div class="col col-6">
+                                        {{POICtrl.secondReview}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p class="h5">Rank:</p>
+                                    </div>
+                                    <div class="col col-6">
+                                        {{POICtrl.secondReviewRank}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-6">
+                                        <p class="h5">Date:</p>
+                                    </div>
+                                    <div class="col col-6">
+                                        {{POICtrl.secondReviewDate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                ng-click="POICtrl.reset()">
+                            Close
+                        </button>
+                        <button id="favoriteButton" type="button" class="btn btn-primary"
+                                ng-click="POICtrl.clickFavoriteFromModal(POICtrl.poiInformation)">Save to
+                            favorite
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-success my-4 btn-block float-right" type="submit"
+                ng-click="POICtrl.saveToServer()">Save All
+        </button>
+    </div>
+    <div ng-hide="POICtrl.isExist" class="alert alert-danger mt-3 mr-3 ml-3" role="alert">
+        You didn't saved any point of interest
+    </div>
+</div>
+
+
+
+

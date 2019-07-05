@@ -7,7 +7,7 @@
     <script type="text/javascript" src="angularScripts/angular.js"></script>
     <script type="text/javascript" src="angularScripts/angular-route.js"></script>
     <script type="text/javascript" src="angularScripts/angular-local-storage.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>-->
     <!--    <script type="text/javascript" src="jquery.js"></script>-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Title</title>
 </head>
 <body ng-app="myApp">
@@ -29,6 +30,7 @@
 <script src="Controllers/appController.js"></script>
 <script src="Controllers/userHomePageController.js"></script>
 <script src="Controllers/loginController.js"></script>
+<script src="Controllers/myPOIController.js"></script>
 
 <!-- load services -->
 
@@ -42,13 +44,7 @@
 <script src="Models/UserModel.js"></script>
 
 
-<!--<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>-->
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 
-<!-- Ignite UI Required Combined JavaScript Files -->
-<script src="http://cdn-na.infragistics.com/igniteui/2019.1/latest/js/infragistics.core.js"></script>
-<script src="http://cdn-na.infragistics.com/igniteui/2019.1/latest/js/infragistics.lob.js"></script>
 
 <div ng-controller="appController as appCtrl">
     <nav class="navbar navbar-expand-md navbar-light bg-light" style="height: 2%;">
@@ -61,23 +57,19 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <div class="navbar-nav">
                 <a href="#" class="nav-item nav-link active">Home</a>
+                <a ng-show="appCtrl.isLogin()" href="#!userHomePage" class="nav-item nav-link active">My Home page</a>
                 <a href="#!register" class="nav-item nav-link" ng-hide="appCtrl.isLogin()">Register</a>
                 <a href="#!" class="nav-item nav-link">About</a>
-                <a ng-show="appCtrl.isLogin()" href="#!userPOI" class="nav-item nav-link">My POI</a>
             </div>
-            <form class="form-inline">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary" ng-click="appCtrl.search()"><i
-                                class="fa fa-search"></i></button>
-                    </div>
-                </div>
-            </form>
             <div class="navbar-nav">
-                <a href="#!login" class="nav-item nav-link" ng-hide="appCtrl.isLogin()">Login</a>
+                <a href="#!login" class="nav-item nav-link float-right" ng-hide="appCtrl.isLogin()">Login</a>
             </div>
-            <label ng-model="appCtrl.user_name">Hello {{appCtrl.user_name}}</label>
+            <div class="navbar-nav">
+                <label class="nav-item nav-link active" ng-model="appCtrl.user_name">Hello {{appCtrl.user_name}}</label>
+                <img class="nav-item nav-link active ml-4" ng-show="appCtrl.isLogin()" src="starFull.png" ng-click="appCtrl.myPOI()">
+                <label class="nav-item nav-link active" ng-show="appCtrl.isLogin()" id="counter">0</label>
+            </div>
+
             <label ng-show="appCtrl.isLogin()" ng-click="appCtrl.signOut()">Sign Out</label>
         </div>
     </nav>
@@ -85,20 +77,10 @@
     </div>
 </div>
 
-<!--<div ng-controller="appController as appCtrl" ng-init="appCtrl.init()">
-    <div class="row text-center text-lg-left">
-        <nav class="navbar navbar-expand-md navbar-dark bg-info">
-            <div class="col-lg-3 col-md-4 col-6" ng-repeat="poi in appCtrl.explore" >
-                <img class="img-fluid img-thumbnail" src={{poi.picture}} >
-                <br>
-                <h5 class="card-title">{{poi.name}}</h5>
-            </div>
-        </nav>
-    </div>
-</div>-->
 
+<!--
 <div ng-controller="appController as appCtrl" ng-init="appCtrl.init()">
-    <footer class="page-footer font-small bg-dark lighten-3 pt-4">
+    <footer class="page-footer font-small lighten-3 pt-4 bg-secondary mt-5">
 
         <div class="container">
 
@@ -107,7 +89,7 @@
                 <div class="col-lg-2 col-md-12 mb-4">
 
                     <div class="view overlay z-depth-1-half">
-                        <img src={{appCtrl.explore[0].picture}} class="img-fluid"
+                        <img src={{appCtrl.explore[0].picture}} class="img-thumbnail"
                              alt="" style="width: 100px; height: 100px;">
                         <a href="">
                             <div class="mask rgba-white-light"></div>
@@ -118,7 +100,7 @@
                 <div class="col-lg-2 col-md-12 mb-4">
 
                     <div class="view overlay z-depth-1-half">
-                        <img src={{appCtrl.explore[1].picture}} class="img-fluid"
+                        <img src={{appCtrl.explore[1].picture}} class="img-thumbnail"
                              alt="">
                         <a href="">
                             <div class="mask rgba-white-light"></div>
@@ -140,17 +122,10 @@
                 </div>
             </div>
         </div>
-        <!-- Footer Elements -->
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
-        </div>
-        <!-- Copyright -->
-
     </footer>
-    <!-- Footer -->
+    &lt;!&ndash; Footer &ndash;&gt;
 </div>
+-->
 
 </body>
 </html>

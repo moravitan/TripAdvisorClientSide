@@ -39,6 +39,11 @@ app.config(function ($routeProvider) {
             templateUrl: 'pages/retrievePassword.html',
             controller: 'loginController as loginCtrl'
         })
+        .when('/myPOI', {
+            // this is a template
+            templateUrl: 'pages/myPOI.html',
+            controller: 'myPOIController as POICtrl'
+        })
         // other
         .otherwise({redirectTo: '/'});
 });

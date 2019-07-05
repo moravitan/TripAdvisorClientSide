@@ -1,125 +1,209 @@
-<!--
-
-<head>
-    <link rel="stylesheet" type="text/css" href="Style\userHomePageStyle.css">
-</head>
-
-<div class="userHomePage" ng-controller="userHomePageController as uHomeCtrl">
-    <nav class = "recommendedPOI" ng-init="uHomeCtrl.getRecommendedPOI()">
-        <h2>Recommended Point Of Interest for you</h2>
-        <div class="imgWrap" ng-repeat="poi in uHomeCtrl.recommendedPOI">
-&lt;!&ndash;            <span>{{poi.name}}</span>&ndash;&gt;
-            <img src = {{poi.picture}} style="height: 200px; width: 200px; margin-left: 20%">
-            <br>
-            <p class="imgDescription">
-                Name: {{poi.name}} <br>
-                Category: {{poi.category}} <br>
-                Rank: {{poi.rank}}
-            </p>
-        </div>
-    </nav>
-    <nav class = "savedPOI">
-
-    </nav>
-</div>
-
-<div class="container">
-
-     Page Heading
-    <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
-    </h1>
-
+<div ng-controller="userHomePageController as uHomeCtrl" ng-init="uHomeCtrl.init()">
     <div class="row">
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Project One</a>
-                    </h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
+        <div class="col col-sm-12">
+            <div class="col-sm-10 h4 mb-4">
+                Recommended Points Of Interest for you
             </div>
         </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Project Two</a>
-                    </h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aliquam aperiam nulla perferendis dolor nobis numquam, rem expedita, aliquid optio, alias illum eaque. Non magni, voluptates quae, necessitatibus unde temporibus.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Project Three</a>
-                    </h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Project Four</a>
-                    </h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aliquam aperiam nulla perferendis dolor nobis numquam, rem expedita, aliquid optio, alias illum eaque. Non magni, voluptates quae, necessitatibus unde temporibus.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Project Five</a>
-                    </h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#">Project Six</a>
-                    </h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aliquam aperiam nulla perferendis dolor nobis numquam, rem expedita, aliquid optio, alias illum eaque. Non magni, voluptates quae, necessitatibus unde temporibus.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-     /.row
+        <div class="col col-sm-10 d-inline-block">
+            <div style="display: inline-block; margin-right: 2px"
+                 ng-repeat="poi in uHomeCtrl.recommendedPOI">
+                <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
+                     alt="Card image cap" ng-click="uHomeCtrl.getPOInformation(poi)" data-target="#informationModal"
+                     data-toggle="modal">
+                <div>
+                    <button type="button" class="btn primary-link" data-toggle="modal"
+                            data-target="#informationModal" ng-click="uHomeCtrl.getPOInformation(poi)">
+                        <u>{{poi.name}}</u>
+                    </button>
+                    <p>Category: {{poi.category}}</p>
+                    <p>rank: {{poi.rank}}</p>
+                    <img class="float-left" ng-src={{uHomeCtrl.imageURL[poi.name]}}
+                         ng-click="uHomeCtrl.clickFavorite(poi)">
+                    <button type="button" class="btn btn-link float-right" data-toggle="modal"
+                            data-target="#reviewModal" ng-click="uHomeCtrl.savePOI(poi)">
+                        Add Review
+                    </button>
+                    <!-- Modal -->
+                    <div ng-show="uHomeCtrl.showInformation" class="modal fade" id="informationModal" tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col col-7">
+                                            <p class="h4">Description</p>
+                                            {{uHomeCtrl.description}}
+                                        </div>
+                                        <div class="col col-5">
+                                            <p class="h4">Rank</p>
+                                            {{uHomeCtrl.rank}} %
+                                            <p class="h5">Number Of Watchers</p>
+                                            {{uHomeCtrl.numberOfWatchers}}
+                                        </div>
+                                    </div>
+                                    <div ng-show="uHomeCtrl.isExistReviews" class="row">
+                                        <p class="h4 align-content-center col col-12">Reviews</p>
+                                        <div class="col col-6">
+                                            <p class="h4">First Review</p>
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <p class="h5">Review:</p>
+                                                </div>
+                                                <div class="col col-6">
+                                                    {{uHomeCtrl.firstReview}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <p class="h5">Rank:</p>
+                                                </div>
+                                                <div class="col col-6">
+                                                    {{uHomeCtrl.firstReviewRank}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <p class="h5">Date:</p>
+                                                </div>
+                                                <div class="col col-6 ">
+                                                    {{uHomeCtrl.firstReviewDate}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-show="uHomeCtrl.isExistSecondReviews" class="col col-6">
+                                            <p class="h4">Second Review</p>
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <p class="h5">Review:</p>
+                                                </div>
+                                                <div class="col col-6">
+                                                    {{uHomeCtrl.secondReview}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <p class="h5">Rank:</p>
+                                                </div>
+                                                <div class="col col-6">
+                                                    {{uHomeCtrl.secondReviewRank}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <p class="h5">Date:</p>
+                                                </div>
+                                                <div class="col col-6">
+                                                    {{uHomeCtrl.secondReviewDate}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            ng-click="uHomeCtrl.reset()">
+                                        Close
+                                    </button>
+                                    <button id="favoriteButton" type="button" class="btn btn-primary"
 
-</div>
- /.container -->
-<div ng-controller="userHomePageController as uHomeCtrl" ng-init="uHomeCtrl.getRecommendedPOI()">
-    <div class="alert alert-secondary" role="alert" style="width: 70%">
-        <h2 class="card-body">Recommended Point Of Interest for you</h2>
-    <div class="card" style="display: inline-block; margin-right: 4px"
-         ng-repeat="poi in uHomeCtrl.recommendedPOI">
-        <img src={{poi.picture}} style="height: 200px;width: 280px" class="card-img-top" alt="Card image cap">
-        <div class="card-body">
-            <br>
-            <h5 class="card-title">{{poi.name}}</h5>
-            <p class="card-text">Category: {{poi.category}}</p>
-            <p class="card-text">rank: {{poi.rank}}</p>
-            <!--                <a href="#" class="btn btn-primary">More information..</a>-->
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary"  id = {{poi.name}} data-toggle="modal" data-target="#exampleModalLong">
-                More information..
-            </button>
-            <a href="#" class="btn btn-primary">Add Review</a>
+                                            ng-click="uHomeCtrl.clickFavoriteFromModal(uHomeCtrl.poiInformation)">Save
+                                        to
+                                        favorite
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--review-->
+                    <div ng-show="uHomeCtrl.showReview" class="modal fade" id="reviewModal" tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reviewModal1">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row" id="post-review-box">
+                                        <div class="col-md-12">
+                                            <form name="reviewForm">
+                                            <textarea required class="form-control animated" cols="50" id="new-review"
+                                                      name="comment" placeholder="Enter your review here..."
+                                                      rows="5" ng-model="uHomeCtrl.review"></textarea>
+                                                <div>
+                                                    <select required class="col custom-select mt-2 mb-2 d-inline-block"
+                                                            ng-model="uHomeCtrl.reviewRank">
+                                                        <option value="" disabled selected>Choose rank</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button ng-disabled="reviewForm.$invalid" type="submit"
+                                                            class="btn btn-primary"
+                                                            ng-click="uHomeCtrl.addReview(poi)">Add review
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col col-sm-12">
+            <div class="col-sm-10 h4 mb-4">
+                Your Last saved Point of interest
+            </div>
+        </div>
+        <div ng-show="uHomeCtrl.existSaved" class="col col-sm-10 d-inline-block">
+            <div style="display: inline-block; margin-right: 2px"
+                 ng-repeat="poi in uHomeCtrl.savedPOI">
+                <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
+                     alt="Card image cap" ng-click="uHomeCtrl.getPOInformation(poi)" data-target="#informationModal"
+                     data-toggle="modal">
+                <div>
+                    <button type="button" class="btn primary-link" data-toggle="modal"
+                            data-target="#informationModal" ng-click="uHomeCtrl.getPOInformation(poi)">
+                        <u>{{poi.name}}</u>
+                    </button>
+                    <p>Category: {{poi.category}}</p>
+                    <p>rank: {{poi.rank}}</p>
+                    <img class="float-left" ng-src={{uHomeCtrl.imageURL[poi.name]}}
+                         ng-click="uHomeCtrl.clickFavorite(poi)">
+                    <button type="button" class="btn btn-link float-right" data-toggle="modal"
+                            data-target="#reviewModal" ng-click="uHomeCtrl.savePOI(poi)">
+                        Add Review
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -22,6 +22,7 @@ angular.module("myApp").controller('loginController', ['userService', 'loginServ
                 $window.sessionStorage.setItem("token", response.data);
                 $window.sessionStorage.setItem("user_name", self.user_name);
                 userService.setLogin(true);
+                userService.init();
                 $location.path('/userHomePage');
 
             }).catch(function (error) {

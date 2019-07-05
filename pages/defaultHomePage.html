@@ -1,218 +1,257 @@
 <head>
     <style>
-
-        .carousel-inner img {
-            width: 100%; /* Set width to 100% */
-            margin: auto;
-            height: 400px;
-        }
-
-        /* Hide the carousel text when the screen is less than 600 pixels wide */
-        @media (max-width: 600px) {
-            .carousel-caption {
-                display: none;
-            }
+        .active-cyan-2 input[type=text]:focus:not([readonly]) {
+            border-bottom: 1px solid #4dd0e1;
+            box-shadow: 0 1px 0 0 #4dd0e1;
         }
     </style>
 </head>
 <div ng-controller="defaultHomePageController as dHomeCtrl" ng-init="dHomeCtrl.init()">
 
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        </ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                <img src="pic2.jpeg" alt="Image">
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row content">
-        <div class="col-sm-2 sidenav">
-            <br>
-            <div class="custom-control custom-checkbox" style="display: inline-block">
-                <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                <label ng-click="dHomeCtrl.orderByRank()" class="custom-control-label" for="defaultUnchecked">Order by
-                    rank</label>
-            </div>
-
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="defaultUnchecked1">
-                <label class="custom-control-label" for="defaultUnchecked1">Food and
-                    Drinks</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="defaultUnchecked2">
-                <label class="custom-control-label"
-                       for="defaultUnchecked2">Museums</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="defaultUnchecked3">
-                <label class="custom-control-label" for="defaultUnchecked3">Night
-                    life</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="defaultUnchecked4">
-                <label class="custom-control-label" for="defaultUnchecked4">Sailing
-                    and water sports</label>
-            </div>
-        </div>
-        <div class="col-sm-10">
-            <div class="row">
-                <div class="col-sm-10">
-                    dfsdf
+    <div>
+        <div class="col-sm-10 d-inline-block">
+            <div class="col d-inline-block">
+                <div class="col-sm-10 h4 mb-4">
+                    Point Of Interest
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-10 text-left">
-                    <div ng-hide="dHomeCtrl.isOrderByRank"
-                         style="display: inline-block; margin-right: 2px"
-                         ng-repeat="poi in dHomeCtrl.allPOI | orderBy: 'category'">
-                        <img src={{poi.picture}} style="height: 150px;width: 280px"  class="img-rounded"
-                             alt="Card image cap">
-                        <div>
-                            <button type="button" class="btn primary-link" data-toggle="modal"
-                                    data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation($index)"><u>{{poi.name}}</u></button>
-                            <p style="margin-left: 9px;">Category: {{poi.category}}</p>
-                            <p style="margin-left: 9px;">rank: {{poi.rank}}</p>
-                            <img ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[$index]}} ng-click="dHomeCtrl.changeURL($index)" id="{{poi.name}}">
-                            <button type="button" class="btn btn-link float-right" id={{$index}} data-toggle="modal"
-                                    data-target="#reviewModal" ng-click="dHomeCtrl.getPOInformation($index)">
-                                Add Review
-                            </button>
-                            <!-- Modal -->
-                            <div ng-show="dHomeCtrl.show" class="modal fade" id="informationModal" tabindex="-1"
-                                 role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
+            <div class="col col-sm-10 ml-4">
+                <div class="row ">
+                    <form class="form-inline md-form form-sm active-cyan-2 mt-2">
+                        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
+                               aria-label="Search" ng-model="dHomeCtrl.searchPOI" (keydown.enter)="dHomeCtrl.search()">
+                        <img src="search.png" ng-click="dHomeCtrl.search()">
+                    </form>
+                    <label class="col col-form-label">Sort By:</label>
+                    <select class="col custom-select mb-2 ml-2" ng-model="dHomeCtrl.selectedSort"
+                            ng-change="dHomeCtrl.orderBy()">
+                        <option value="category" selected>Category</option>
+                        <option value="rank">Rank</option>
+                    </select>
+                    <label class="col col-form-label">Filter By:</label>
+                    <select class="col custom-select  mb-2 ml-2" ng-model="dHomeCtrl.selectedFilter"
+                            ng-change="dHomeCtrl.filterBy()">
+                        <option value="" selected>None</option>
+                        <option value="Food and Drinks">Food and Drinks</option>
+                        <option value="Night life">Night life</option>
+                        <option value="Museums">Museums</option>
+                        <option value="Sailing and water sports">Sailing and water sports</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-sm-10 d-inline-block">
+            <div ng-show="dHomeCtrl.isOrderByCategory"
+                 style="display: inline-block; margin-right: 2px"
+                 ng-repeat="poi in dHomeCtrl.allPOI | orderBy: dHomeCtrl.selectedSort | filter: {'name': dHomeCtrl.poiNameSeach}">
+                <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
+                     alt="Card image cap" ng-click="dHomeCtrl.getPOInformation(poi)" data-target="#informationModal"
+                     data-toggle="modal">
+                <div>
+                    <button type="button" class="btn primary-link" data-toggle="modal"
+                            data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation(poi)">
+                        <u>{{poi.name}}</u>
+                    </button>
+                    <p>Category: {{poi.category}}</p>
+                    <p>rank: {{poi.rank}}</p>
+                    <img class="float-left" ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[poi.name]}}
+                         ng-click="dHomeCtrl.clickFavorite(poi)">
+                    <button type="button" class="btn btn-link float-right" data-toggle="modal"
+                            data-target="#reviewModal" ng-click="dHomeCtrl.savePOI(poi)">
+                        Add Review
+                    </button>
+                    <!-- Modal -->
+                    <div ng-show="dHomeCtrl.showInformation" class="modal fade" id="informationModal" tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col col-7">
+                                            <p class="h4">Description</p>
                                             {{dHomeCtrl.description}}
-                                            <br>
-                                            {{dHomeCtrl.rank}}
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        <div class="col col-5">
+                                            <p class="h4">Rank</p>
+                                            {{dHomeCtrl.rank}} %
+                                            <p class="h5">Number Of Watchers</p>
+                                            {{dHomeCtrl.numberOfWatchers}}
                                         </div>
+                                    </div>
+                                    <div ng-show="dHomeCtrl.isExistReviews" class="row">
+                                        <p class="h4 align-content-center col col-12">Reviews</p>
+                                       <!-- <div class="row">-->
+                                            <div class="col col-6">
+                                                <p class="h4">First Review</p>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <p class="h5">Review:</p>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        {{dHomeCtrl.firstReview}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <p class="h5">Rank:</p>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        {{dHomeCtrl.firstReviewRank}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <p class="h5">Date:</p>
+                                                    </div>
+                                                    <div class="col col-6 ">
+                                                       {{dHomeCtrl.firstReviewDate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-show="dHomeCtrl.isExistSecondReviews" class="col col-6">
+                                                <p class="h4">Second Review</p>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <p class="h5">Review:</p>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        {{dHomeCtrl.secondReview}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <p class="h5">Rank:</p>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        {{dHomeCtrl.secondReviewRank}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col col-6">
+                                                        <p class="h5">Date:</p>
+                                                    </div>
+                                                    <div class="col col-6">
+                                                        {{dHomeCtrl.secondReviewDate}}
+                                                    </div>
+                                                </div>
+                                            </div>
+<!--                                        </div>-->
                                     </div>
                                 </div>
-                            </div>
-                            <div ng-show="dHomeCtrl.show" class="modal fade" id="reviewModal" tabindex="-1"
-                                 role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="reviewModal1">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{dHomeCtrl.description}}
-                                            <br>
-                                            {{dHomeCtrl.rank}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="dHomeCtrl.reset()">
+                                        Close
+                                    </button>
+                                    <button  id="favoriteButton" type="button" class="btn btn-primary" ng-disabled="!dHomeCtrl.isLogin()"
+                                            ng-click="dHomeCtrl.clickFavoriteFromModal(dHomeCtrl.poiInformation)">Save to favorite</button>
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div ng-show="dHomeCtrl.isOrderByRank"
-                         style="display: inline-block; margin-right: 2px"
-                         ng-repeat="poi in dHomeCtrl.allPOI | orderBy: 'rank': true">
-                        <img src={{poi.picture}} style="height: 150px;width: 280px"  class="img-rounded"
-                             alt="Card image cap">
-                        <div>
-                            <button type="button" class="btn primary-link" data-toggle="modal"
-                                    data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation($index)"><u>{{poi.name}}</u></button>
-                            <p style="margin-left: 9px;">Category: {{poi.category}}</p>
-                            <p style="margin-left: 9px;">rank: {{poi.rank}}</p>
-                            <img ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[$index]}} ng-click="dHomeCtrl.changeURL($index)" id="{{poi.name}}">
-                            <button type="button" class="btn btn-link float-right" id={{$index}} data-toggle="modal"
-                                    data-target="#reviewModal" ng-click="dHomeCtrl.getPOInformation($index)">
-                                Add Review
-                            </button>
-                            <!-- Modal -->
-                            <div ng-show="dHomeCtrl.show" class="modal fade" id="informationModal" tabindex="-1"
-                                 role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{dHomeCtrl.description}}
-                                            <br>
-                                            {{dHomeCtrl.rank}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                    <!--review-->
+                    <div ng-show="dHomeCtrl.showReview" class="modal fade" id="reviewModal" tabindex="-1"
+                         role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reviewModal1">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row" id="post-review-box">
+                                        <div class="col-md-12">
+                                            <form name="reviewForm">
+                                            <textarea required class="form-control animated" cols="50" id="new-review"
+                                                      name="comment" placeholder="Enter your review here..."
+                                                      rows="5" ng-model="dHomeCtrl.review"></textarea>
+                                                <div>
+                                                    <select required class="col custom-select mt-2 mb-2 d-inline-block"
+                                                            ng-model="dHomeCtrl.reviewRank">
+                                                        <option value="" disabled selected>Choose rank</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button ng-disabled="reviewForm.$invalid" type="submit"
+                                                            class="btn btn-primary"
+                                                            ng-click="dHomeCtrl.addReview(poi)">Add review
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div ng-show="dHomeCtrl.show" class="modal fade" id="reviewModal" tabindex="-1"
-                                 role="dialog"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="reviewModal1">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            {{dHomeCtrl.description}}
-                                            <br>
-                                            {{dHomeCtrl.rank}}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div ng-show="dHomeCtrl.isOrderByRank"
+                 style="display: inline-block; margin-right: 2px"
+                 ng-repeat="poi in dHomeCtrl.allPOI | orderBy: 'rank': true | filter: {'name': poiNameSeach}">
+                <img src={{poi.picture}} style="height: 130px;width: 200px"
+                     alt="Card image cap">
+                <div>
+                    <button type="button" class="btn primary-link" data-toggle="modal"
+                            data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation(poi)">
+                        <u>{{poi.name}}</u>
+                    </button>
+                    <p style="margin-left: 9px;">Category: {{poi.category}}</p>
+                    <p style="margin-left: 9px;">rank: {{poi.rank}}</p>
+                    <img ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[poi.name]}}
+                         ng-click="dHomeCtrl.clickFavorite(poi)">
+                    <button type="button" class="btn btn-link float-right" data-toggle="modal"
+                            data-target="#reviewModal" ng-click="dHomeCtrl.getPOInformation(poi)">
+                        Add Review
+                    </button>
+                </div>
+            </div>
+            <div ng-show="dHomeCtrl.isFiltered"
+                 style="display: inline-block; margin-right: 2px"
+                 ng-repeat="poi in dHomeCtrl.allPOI | filter: {'category' : dHomeCtrl.selectedFilter, 'name': dHomeCtrl.poiNameSeach} | orderBy: dHomeCtrl.selectedSort : true">
+                <img src={{poi.picture}} style="height: 130px;width: 200px"
+                     alt="Card image cap">
+                <div>
+                    <button type="button" class="btn primary-link" data-toggle="modal"
+                            data-target="#informationModal" ng-click="dHomeCtrl.getPOInformation(poi)">
+                        <u>{{poi.name}}</u>
+                    </button>
+                    <p style="margin-left: 9px;">Category: {{poi.category}}</p>
+                    <p style="margin-left: 9px;">rank: {{poi.rank}}</p>
+                    <img ng-show="dHomeCtrl.isLogin()" ng-src={{dHomeCtrl.imageURL[poi.name]}}
+                         ng-click="dHomeCtrl.clickFavorite(poi)">
+                    <button type="button" class="btn btn-link float-right" data-toggle="modal"
+                            data-target="#reviewModal" ng-click="dHomeCtrl.getPOInformation(poi)">
+                        Add Review
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 

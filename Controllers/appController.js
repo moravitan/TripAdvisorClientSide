@@ -3,6 +3,8 @@ angular.module("myApp").controller('appController', ['userService', 'POIService'
         let self = this;
         self.user_name = "Guest";
         self.explore = [];
+
+
         self.isLogin = function () {
             if (userService.getLogin()) {
                 console.log($window.sessionStorage.getItem("user_name"));
@@ -17,9 +19,14 @@ angular.module("myApp").controller('appController', ['userService', 'POIService'
 
         };
 
+        self.myPOI = function(){
+            $location.path('/myPOI')
+
+        };
+/*
         POIService.getAllPOI().then(function (response) {
             $rootScope.POI = response.data;
-        }).catch(err => console.log(err));
+        }).catch(err => console.log(err));*/
         // userService.getQuestions().then().catch(err => console.log(err));
         // userService.getCategories().then().catch(err => console.log(err));
 
@@ -50,5 +57,6 @@ angular.module("myApp").controller('appController', ['userService', 'POIService'
         self.homepage = function () {
           $location.path('/')
         };
+
 
     }]);

@@ -1,5 +1,5 @@
-angular.module("myApp").controller('registerController', ['registerService', 'userService', 'POIService', 'UserModel',
-    function (registerService, userService, POIService, UserModel) {
+angular.module("myApp").controller('registerController', ['registerService', 'userService', 'POIService', 'UserModel', '$window',
+    '$location', function (registerService, userService, POIService, UserModel, $window, $location) {
         let self = this;
         self.loginState = false;
         self.user = new UserModel();
@@ -55,26 +55,57 @@ angular.module("myApp").controller('registerController', ['registerService', 'us
 
 
         };
+        self.isValid = false;
         self.register = function () {
-            var questions = [self.user.questions[0].question, self.user.questions[1].question];
-            var answers = [self.user.answers[0], self.user.answers[1]];
-            var data = {
-                user_name: self.user.user_name,
-                password: self.user.password,
-                first_name: self.user.first_name,
-                last_name: self.user.last_name,
-                country: self.user.country.Name,
-                city: self.user.city,
-                email: self.user.email,
-                questions: questions,
-                answers: answers,
-                interest: self.c
+            self.validate();
+            if (self.isValid) {
+                var questions = [self.user.questions[0].question, self.user.questions[1].question];
+                var answers = [self.user.answers[0], self.user.answers[1]];
+                var data = {
+                    user_name: self.user.user_name,
+                    password: self.user.password,
+                    first_name: self.user.first_name,
+                    last_name: self.user.last_name,
+                    country: self.user.country.Name,
+                    city: self.user.city,
+                    email: self.user.email,
+                    questions: questions,
+                    answers: answers,
+                    interest: self.c
+                }
+                console.log(data);
+                registerService.register(data).then(function (response) {
+                    console.log(response);
+                    self.isValid = false;
+                    $location.path('/login');
+                }).catch(error => console.log(error));
             }
-            console.log(data);
-            registerService.register(data).then(function (response) {
-                console.log(response);
-            }).catch(error => console.log(error));
 
+
+        };
+
+        self.validate = function () {
+            if (!(/^[A-Za-z]+$/.test(self.user.user_name))) {
+                $window.alert("user name doesn't match pattern");
+                return;
+            }
+            if (!(/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(self.user.password))) {
+                $window.alert("password doesn't match pattern");
+                return;
+            }
+            if (!(/^[A-Za-z]+$/.test(self.user.first_name))) {
+                $window.alert("first name doesn't match pattern");
+                return;
+            }
+            if (!(/^[A-Za-z]+$/.test(self.user.last_name))) {
+                $window.alert("last name doesn't match pattern");
+                return;
+            }
+            if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(self.user.email))) {
+                $window.alert("email doesn't match pattern");
+                return;
+            }
+            self.isValid = true;
         };
 
         self.setSecondQuestion = function () {

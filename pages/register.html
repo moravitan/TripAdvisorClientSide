@@ -28,7 +28,7 @@
                        required>
 <!--                ng-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/"-->
                 <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-                    Between 3 to 8 letters and 1 digit
+                    Between 5 to 10 letters and 1 digit
                 </small>
             </div>
         </div>
@@ -76,7 +76,6 @@
         <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail"
                name="Email"
                ng-model="registerCtrl.user.email"
-               ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/"
                required>
             <small class="form-text text-muted mb-4">Email format</small>
 
