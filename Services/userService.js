@@ -155,7 +155,6 @@ angular.module('myApp').service('userService', ['$window', '$http', function ($w
     };
 
     self.getTotalNumberOfPOI = function(){
-        console.log( self.userPOI.length + self.serverPOI.length);
       return self.userPOI.length + self.serverPOI.length;
     };
 
@@ -167,7 +166,6 @@ angular.module('myApp').service('userService', ['$window', '$http', function ($w
             }
         }
         //check in server
-        console.log(self.serverPOI);
         for (let i = 0; i < self.serverPOI.length; i++) {
             if (self.serverPOI[i].name == name) {
                 return true;

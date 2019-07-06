@@ -49,7 +49,7 @@
 <div ng-controller="appController as appCtrl">
     <nav class="navbar navbar-expand-md navbar-light bg-light" style="height: 2%;">
         <!--    <a href="#" class="navbar-brand">Brand</a>-->
-        <img src="logo.png" style="height:60px; width:100px" ng-click="appCtrl.homepage()">
+        <img src="pictures/logo.png" style="height:60px; width:100px" ng-click="appCtrl.homepage()">
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -59,7 +59,7 @@
                 <a href="#" class="nav-item nav-link active">Home</a>
                 <a ng-show="appCtrl.isLogin()" href="#!userHomePage" class="nav-item nav-link active">My Home page</a>
                 <a href="#!register" class="nav-item nav-link" ng-hide="appCtrl.isLogin()">Register</a>
-                <a href="#!" class="nav-item nav-link">About</a>
+                <a href="#!about" class="nav-item nav-link">About</a>
             </div>
             <div class="navbar-nav">
                 <a href="#!login" class="nav-item nav-link float-right" ng-hide="appCtrl.isLogin()">Login</a>
@@ -78,19 +78,19 @@
 </div>
 
 
-<!--
 <div ng-controller="appController as appCtrl" ng-init="appCtrl.init()">
-    <footer class="page-footer font-small lighten-3 pt-4 bg-secondary mt-5">
+    <footer class="page-footer font-small lighten-3 pt-4 bg-secondary mt-5" id="footer">
 
         <div class="container">
 
-            <div class="row" style="margin-left: 30%">
+            <div class="row" style="margin-left: 25%">
 
                 <div class="col-lg-2 col-md-12 mb-4">
 
                     <div class="view overlay z-depth-1-half">
+                        <p>{{appCtrl.explore[0].name}}</p>
                         <img src={{appCtrl.explore[0].picture}} class="img-thumbnail"
-                             alt="" style="width: 100px; height: 100px;">
+                             alt="" style="width: 130px; height: 200px;">
                         <a href="">
                             <div class="mask rgba-white-light"></div>
                         </a>
@@ -100,8 +100,9 @@
                 <div class="col-lg-2 col-md-12 mb-4">
 
                     <div class="view overlay z-depth-1-half">
+                        <p>{{appCtrl.explore[1].name}}</p>
                         <img src={{appCtrl.explore[1].picture}} class="img-thumbnail"
-                             alt="">
+                             alt="" style="width: 130px; height: 200px;">
                         <a href="">
                             <div class="mask rgba-white-light"></div>
                         </a>
@@ -109,11 +110,12 @@
 
                 </div>
 
-                <div class="col-lg-2 col-md-6 mb-4">
+                <div class="col-lg-2 col-md-12 mb-4">
 
                     <div class="view overlay z-depth-1-half">
-                        <img src={{appCtrl.explore[2].picture}} class="img-fluid"
-                             alt="">
+                        <p>{{appCtrl.explore[2].name}}</p>
+                        <img src={{appCtrl.explore[2].picture}} class="img-thumbnail"
+                             alt="" style="width: 130px; height: 200px;">
                         <a href="">
                             <div class="mask rgba-white-light"></div>
                         </a>
@@ -123,9 +125,8 @@
             </div>
         </div>
     </footer>
-    &lt;!&ndash; Footer &ndash;&gt;
+    <!-- Footer -->
 </div>
--->
 
 </body>
 </html>

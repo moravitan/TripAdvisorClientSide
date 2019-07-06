@@ -4,10 +4,10 @@ angular.module("myApp").controller('appController', ['userService', 'POIService'
         self.user_name = "Guest";
         self.explore = [];
 
+        $('#footer').show();
 
         self.isLogin = function () {
             if (userService.getLogin()) {
-                console.log($window.sessionStorage.getItem("user_name"));
                 self.user_name = $window.sessionStorage.getItem("user_name");
                 return true;
             }

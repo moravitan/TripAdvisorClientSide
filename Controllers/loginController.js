@@ -9,13 +9,13 @@ angular.module("myApp").controller('loginController', ['userService', 'loginServ
         self.question = "";
         self.answer = "";
         self.userQuestions = [];
+        $('#footer').show();
 
         if (userService.getLogin()) {
             $location.path("/userHomePage");
         }
 
         self.login = function () {
-            console.log("hey");
             self.isLogin = true;
             var data = {"user_name": self.user_name, "password": self.password};
             loginService.login(data).then(function (response) {

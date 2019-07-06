@@ -34,7 +34,7 @@ angular.module('myApp').service('POIService', function ($http, $window) {
 
 
     self.getRandomThreeMostPopularPointOfInterest = function(){
-/*        var req = {
+        var req = {
             method: 'GET',
             url: 'http://localhost:3000/getRandomThreeMostPopularPointOfInterest',
             headers: {
@@ -45,7 +45,7 @@ angular.module('myApp').service('POIService', function ($http, $window) {
                 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS'
             }
         }
-        return $http(req);*/
+        return $http(req);
     };
 
     self.getPOInformation = function(poiName){

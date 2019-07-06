@@ -12,6 +12,8 @@ angular.module("myApp").controller('defaultHomePageController', ['userService', 
         self.POI = "";
         self.allPOI = [];
 
+        $('#footer').show();
+
 
         /*
                 if (userService.getLogin()) {
@@ -25,6 +27,8 @@ angular.module("myApp").controller('defaultHomePageController', ['userService', 
         self.init = function () {
             self.counter = userService.getTotalNumberOfPOI();
             $('#counter').text(self.counter);
+            $('#footer').show();
+
             POIService.getAllPOI().then(function (response) {
                 self.allPOI = response.data;
                 for (let i = 0; i < self.allPOI.length; i++) {
@@ -39,7 +43,6 @@ angular.module("myApp").controller('defaultHomePageController', ['userService', 
         };
 
         self.orderByRank = function () {
-            console.log(self.isOrderByRank);
             if (self.isOrderByRank) {
                 self.isOrderByRank = false;
             } else {
@@ -73,7 +76,6 @@ angular.module("myApp").controller('defaultHomePageController', ['userService', 
                 if (response.data[0].review != null) {
                     self.isExistReviews = true;
                     for (let i = 0; i < response.data.length && i < 2; i++) {
-                        console.log(response.data.length);
                         if (i == 0){
                             self.firstReview = response.data[i].review;
                             self.firstReviewDate = response.data[i].date;
@@ -178,7 +180,6 @@ angular.module("myApp").controller('defaultHomePageController', ['userService', 
         self.review = "";
         self.reviewRank = "";
         self.addReview = function () {
-            console.log(self.reviewRank.toString());
             var data = {
                 'name': self.tempPOI.name,
                 'review': self.review,

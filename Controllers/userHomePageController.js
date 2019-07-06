@@ -4,6 +4,7 @@ angular.module("myApp").controller('userHomePageController', ['POIService', 'use
         var self = this;
 
         self.recommendedPOI = [];
+        $('#footer').show();
 
 
         self.imageURL = [];
@@ -11,6 +12,8 @@ angular.module("myApp").controller('userHomePageController', ['POIService', 'use
             self.reset();
             self.getRecommendedPOI();
             self.getSavedPOI();
+            self.counter = userService.getTotalNumberOfPOI();
+            $('#counter').text(self.counter);
         };
         self.getRecommendedPOI = function () {
 
@@ -32,7 +35,6 @@ angular.module("myApp").controller('userHomePageController', ['POIService', 'use
         self.savedPOI = [];
         self.getSavedPOI = function(){
             userService.getLastTwoSavedInterest().then(function(response){
-                console.log(response.data);
                 self.savedPOI = response.data;
                 if (self.savedPOI.length > 0){
                     self.existSaved = true;
@@ -66,7 +68,6 @@ angular.module("myApp").controller('userHomePageController', ['POIService', 'use
                 if (response.data[0].review != null) {
                     self.isExistReviews = true;
                     for (let i = 0; i < response.data.length && i < 2; i++) {
-                        console.log(response.data.length);
                         if (i == 0) {
                             self.firstReview = response.data[i].review;
                             self.firstReviewDate = response.data[i].date;
@@ -144,7 +145,6 @@ angular.module("myApp").controller('userHomePageController', ['POIService', 'use
         self.review = "";
         self.reviewRank = "";
         self.addReview = function () {
-            console.log(self.reviewRank.toString());
             var data = {
                 'name': self.tempPOI.name,
                 'review': self.review,

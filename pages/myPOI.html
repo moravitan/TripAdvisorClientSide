@@ -5,7 +5,7 @@
 
         <div ng-show="POICtrl.isExist"
              style="display: inline-block; margin-right: 2px"
-             ng-repeat="poi in POICtrl.localPOI">
+             ng-repeat="poi in POICtrl.userPOI" draggable="true">
             <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
                  alt="Card image cap" ng-click="POICtrl.getPOInformation(poi)" data-target="#informationModal"
                  data-toggle="modal">
@@ -17,28 +17,13 @@
                 <p>Category: {{poi.category}}</p>
                 <p>rank: {{poi.rank}}</p>
                 <button type="button" class="btn btn-link float-right"
-                        ng-click="POICtrl.remove($index)">
-                    Remove
+                        data-toggle="modal"
+                        data-target="#changeOrder"
+                        ng-click="POICtrl.savePOI(poi)">
+                    Change order
                 </button>
             </div>
         </div>
-
-        <div ng-show="POICtrl.isExist"
-             style="display: inline-block; margin-right: 2px"
-             ng-repeat="poi in POICtrl.serverPOI">
-            <img src={{poi.picture}} style="height: 130px;width: 200px" class="card-img-top"
-                 alt="Card image cap" ng-click="POICtrl.getPOInformation(poi)" data-target="#informationModal"
-                 data-toggle="modal">
-            <div>
-                <button type="button" class="btn primary-link" data-toggle="modal"
-                        data-target="#informationModal" ng-click="POICtrl.getPOInformation(poi)">
-                    <u>{{poi.name}}</u>
-                </button>
-                <p>Category: {{poi.category}}</p>
-                <p>rank: {{poi.rank}}</p>
-            </div>
-        </div>
-
 
         <!-- Modal -->
         <div ng-show="POICtrl.showInformation" class="modal fade" id="informationModal" tabindex="-1"
@@ -139,6 +124,46 @@
             </div>
         </div>
 
+        <!--change order -->
+        <div ng-show="POICtrl.showChangeOrder" class="modal fade" id="changeOrder" tabindex="-1"
+             role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" id="post-review-box">
+                            <span>  Choose Position</span>
+                            <div class="col-md-12">
+                                <div>
+                                    <select required class="col custom-select mt-2 mb-2 d-inline-block"
+                                            ng-model="POICtrl.order">
+                                        <option ng-repeat="poi in POICtrl.userPOI" value={{$index}}>{{$index}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="POICtrl.changeOrder($index)">Save to
+                            favorite
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <button class="btn btn-success my-4 btn-block float-right" type="submit"
                 ng-click="POICtrl.saveToServer()">Save All
         </button>
@@ -146,6 +171,7 @@
     <div ng-hide="POICtrl.isExist" class="alert alert-danger mt-3 mr-3 ml-3" role="alert">
         You didn't saved any point of interest
     </div>
+
 </div>
 
 
