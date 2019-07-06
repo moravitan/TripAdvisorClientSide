@@ -14,3 +14,14 @@ You can filter points by category and even order them by rank (from the most pop
 
 
 ENJOY YOUR TRIP PLANNIG! :)
+
+
+Aleady sign in users:
+
+<user name> <password>
+  a            a
+  Mori        12345A
+  gal         12345A
+  liad        12345A
+  Yogi        12345A
+  Yuv         12345A
