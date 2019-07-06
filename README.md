@@ -16,7 +16,7 @@ You can filter points by category and even order them by rank (from the most pop
 ENJOY YOUR TRIP PLANNIG! :)
 
 
-Aleady sign in users:
+Already sign in users:
 
 <user name> <password>
   a            a
